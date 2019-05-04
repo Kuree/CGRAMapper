@@ -18,7 +18,7 @@ clean:
 	rm -rf build/*
 
 build/%.so: build/%.o
-	$(CXX) -shared $(LPATH) $(LDFLAGS) -o $@ $^ -lcoreir 
+	$(CXX) -shared $(LPATH) $(LDFLAGS) -o $@ $^ -lcoreir -static-libgcc -static-libstdc++
 	cp $@ $(HOME)/lib/libcoreir-$*.so
 
 build/%.dylib: build/%.o

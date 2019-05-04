@@ -14,7 +14,7 @@ CXX?=g++
 ifeq ($(COREIRCONFIG),g++-4.9)
 CXX=g++-4.9
 endif
-CXXFLAGS+=-std=c++11 -Wall -fPIC -g -Wfatal-errors
+CXXFLAGS+=-std=c++11 -Wall -fPIC -g -Wfatal-errors -static-libgcc -static-libstdc++
 
 TEST_FILES=$(wildcard examples/[^_]*.json)
 MAPPED_FILES=$(patsubst examples/%, mapped/%, $(TEST_FILES))

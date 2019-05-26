@@ -64,6 +64,36 @@ void load_commonlib_ext(Context* c) {
 
 }
 
+
+void load_float(Context* c) {
+  Generator* fadd = c->getGenerator("float.add");
+  fadd->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {
+    Values PEArgs({
+      {"alu_op",Const::make(c,"fadd")},
+      {"signed",Const::make(c,false)}
+    });
+    def->addInstance("binop","cgralib.PE",{{"op_kind",Const::make(c,"alu")}}, PEArgs);
+    def->connect("self.in0","binop.data.in.0");
+    def->connect("self.in1","binop.data.in.1");
+    def->connect("self.out","binop.data.out");
+
+  });
+
+  Generator* fmul = c->getGenerator("float.mul");
+  fmul->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {
+    Values PEArgs({
+      {"alu_op",Const::make(c,"fmul")},
+      {"signed",Const::make(c,false)}
+    });
+    def->addInstance("binop","cgralib.PE",{{"op_kind",Const::make(c,"alu")}},PEArgs);
+    def->connect("self.in0","binop.data.in.0");
+    def->connect("self.in1","binop.data.in.1");
+    def->connect("self.out","binop.data.out");
+
+  });
+
+}
+
 void load_opsubstitution(Context* c) {
   //CoreIR ops
   //op substituions (coreir prims in terms of other coreir prims)
@@ -306,6 +336,6 @@ void LoadDefinition_cgralib(Context* c) {
   load_opsubstitution(c);
   load_corebit2lut(c);
   load_cgramapping(c);
-
+  load_float(c);
 }
 

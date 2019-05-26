@@ -2,6 +2,7 @@
 
 #include "coreir/libs/cgralib.h"
 #include "coreir/libs/commonlib.h"
+#include "coreir/libs/float.h"
 #include "coreir/passes/analysis/coreirjson.h"
 
 
@@ -102,6 +103,7 @@ int main(int argc, char *argv[]){
   
   CoreIRLoadLibrary_cgralib(c);
   CoreIRLoadLibrary_commonlib(c);
+  CoreIRLoadLibrary_float(c);
 
   string premap;
   string postmap;

@@ -94,6 +94,7 @@ void load_float(Context* c) {
 
 }
 
+void load_opsubstitution(Context* c) {
   //coreir.neg should be  0 - in
   c->getGenerator("coreir.neg")->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {
     def->addInstance("sub","coreir.sub");
@@ -311,6 +312,7 @@ void LoadDefinition_cgralib(Context* c) {
 
   load_mem_ext(c);
   load_commonlib_ext(c);
+  load_opsubstitution(c);
   load_corebit2lut(c);
   load_cgramapping(c);
   load_float(c);

@@ -35,7 +35,7 @@ void load_commonlib_ext(Context* c) {
     uint width = args.at("width")->get<int>();
     ASSERT(width==16,"NYI non 16");
     Values PEArgs({
-      {"alu_op",Const::make(c,"gte_max")},
+      {"alu_op",Const::make(c,"max")},
       {"flag_sel",Const::make(c,"pe")},
       {"signed",Const::make(c,true)}
     });
@@ -51,9 +51,9 @@ void load_commonlib_ext(Context* c) {
     uint width = args.at("width")->get<int>();
     ASSERT(width==16,"NYI non 16");
     Values PEArgs({
-      {"alu_op",Const::make(c,"gte_max")},
+      {"alu_op",Const::make(c,"umax")},
       {"flag_sel",Const::make(c,"pe")},
-      {"signed",Const::make(c,true)}
+      {"signed",Const::make(c,false)}
     });
     def->addInstance("cgramax","cgralib.PE",{{"op_kind",Const::make(c,"combined")}},PEArgs);
     def->connect("self.in0","cgramax.data.in.0");
@@ -93,32 +93,6 @@ void load_float(Context* c) {
   });
 
 }
-
-void load_opsubstitution(Context* c) {
-  //CoreIR ops
-  //op substituions (coreir prims in terms of other coreir prims)
-  
-  //Changing all the comparison's to <u|s><le|ge>
-  vector<string> signs({"u","s"});
-  vector<std::pair<string,string>> ops({
-    {"gt","le"},
-    {"lt","ge"}
-  });
-  for (auto sign : signs) {
-    for (auto op : ops) {
-      string from = "coreir." + string(sign)+op.first;
-      string to = "coreir." + string(sign)+op.second;
-      Module* mod = c->getGenerator(from)->getModule({{"width",Const::make(c,16)}});
-      ModuleDef* def = mod->newModuleDef();
-      def->addInstance("comp",to);
-      def->addInstance("not","corebit.not");
-      def->connect("self.in0","comp.in0");
-      def->connect("self.in1","comp.in1");
-      def->connect("comp.out","not.in");
-      def->connect("not.out","self.out");
-      mod->setDef(def);
-    }
-  }
 
   //coreir.neg should be  0 - in
   c->getGenerator("coreir.neg")->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {
@@ -286,10 +260,14 @@ void load_cgramapping(Context* c) {
     std::vector<std::tuple<string,string,string,uint>> compops({
       std::make_tuple("eq","eq","eq",0),
       std::make_tuple("neq","neq","ne",0),
-      std::make_tuple("sge","gte_max","pe",1),
-      std::make_tuple("uge","gte_max","pe",0),
-      std::make_tuple("sle","lte_min","pe",1),
-      std::make_tuple("ule","lte_min","pe",0),
+      std::make_tuple("sge","ge","pe",1),
+      std::make_tuple("uge","uge","pe",0),
+      std::make_tuple("sle","le","pe",1),
+      std::make_tuple("ule","ule","pe",0),
+      std::make_tuple("sgt","gt","pe",1),
+      std::make_tuple("ugt","ugt","pe",0),
+      std::make_tuple("slt","lt","pe",1),
+      std::make_tuple("ult","ult","pe",0),
     });
     for (auto op : compops) {
       string opstr = std::get<0>(op);
@@ -333,7 +311,6 @@ void LoadDefinition_cgralib(Context* c) {
 
   load_mem_ext(c);
   load_commonlib_ext(c);
-  load_opsubstitution(c);
   load_corebit2lut(c);
   load_cgramapping(c);
   load_float(c);

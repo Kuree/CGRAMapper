@@ -41,7 +41,8 @@ void MapperPasses::ConstDuplication::setVisitorInfo() {
   Context* c = this->getContext();
   if (c->hasModule("corebit.const")) {
     addVisitorFunction(c->getModule("corebit.const"),ConstDup);
-  } else if (c->hasGenerator("coreir.const")) {
+  }
+  if (c->hasGenerator("coreir.const")) {
     addVisitorFunction(c->getGenerator("coreir.const"),ConstDup);
   }
 

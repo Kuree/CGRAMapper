@@ -13,9 +13,10 @@ void load_mem_ext(Context* c) {
     ASSERT(width==16,"NYI Non 16 bit width");
     ASSERT(depth<=1024,"NYI using mutliple memories");
     Values rbGenargs({{"width",Const::make(c,width)},{"total_depth",Const::make(c,1024)}});
+    nlohmann::json jdata;
     def->addInstance("cgramem","cgralib.Mem",
       rbGenargs,
-      {{"mode",Const::make(c,"linebuffer")},{"depth",Const::make(c,depth)}});
+      {{"mode",Const::make(c,"linebuffer")},{"depth",Const::make(c,depth)}, {"init", CoreIR::Const::make(c, jdata)}});
     def->addInstance("c1","corebit.const",{{"value",Const::make(c,true)}});
     def->addInstance("c0","corebit.const",{{"value",Const::make(c,false)}});
     def->connect("self.wdata","cgramem.wdata");

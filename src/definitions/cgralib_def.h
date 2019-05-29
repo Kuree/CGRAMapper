@@ -38,7 +38,7 @@ void load_mem_ext(Context* c) {
     def->addInstance("c0","corebit.const",{{"value",Const::make(c,false)}});
     def->connect("self.rdata","cgramem.rdata");
     def->connect("self.ren","cgramem.ren");
-
+    def->connect("self.raddr", "cgramem.addr");
   });
 }
 

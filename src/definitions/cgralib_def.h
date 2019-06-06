@@ -76,6 +76,20 @@ void load_commonlib_ext(Context* c) {
 
   });
 
+  Generator* abs = c->getGenerator("commonlib.abs");
+  abs->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {
+    uint width = args.at("width")->get<int>();
+    ASSERT(width==16,"NYI non 16");
+    Values PEArgs({
+      {"alu_op",Const::make(c,"abs")},
+      {"signed",Const::make(c,false)}
+    });
+    def->addInstance("abs","cgralib.PE",{{"op_kind",Const::make(c,"alu")}},PEArgs);
+    def->connect("self.in","abs.data.in.0");
+    def->connect("self.out","abs.data.out");
+
+  });
+
 }
 
 

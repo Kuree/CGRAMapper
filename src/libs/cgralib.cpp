@@ -127,6 +127,26 @@ Namespace* CoreIRLoadLibrary_cgralib(Context* c) {
     d["chain_enable"] = Const::make(c,false);
 
     p["init"] = JsonType::make(c);
+
+    p["rate_matched"] = c->Bool();
+    d["rate_matched"] = Const::make(c, false);
+    p["stencil_width"] = c->Int();
+    d["stencil_width"] = Const::make(c, 0);
+    p["iter_cnt"] = c->Int();
+    d["iter_cnt"] = Const::make(c, 0);
+    p["dimensionality"] = c->Int();
+    d["dimensionality"] = Const::make(c, 0);
+    p["stride_0"] = c->Int();
+    d["stride_0"] = Const::make(c, 0);
+    p["range_0"] = c->Int();
+    d["range_0"] = Const::make(c, 0);
+    p["chain_en"] = c->Bool();
+    d["chain_en"] = Const::make(c, false);
+    p["chain_idx"] = c->Int();
+    d["chain_idx"] = Const::make(c, 0);
+    p["starting_addr"] = c->Int();
+    d["starting_addr"] = Const::make(c, 0);
+
     return {p,d};
   };
 

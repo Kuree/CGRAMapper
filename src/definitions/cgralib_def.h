@@ -11,7 +11,6 @@ void load_mem_ext(Context* c) {
     uint width = args.at("width")->get<int>();
     uint depth = args.at("depth")->get<int>();
     ASSERT(width==16,"NYI Non 16 bit width");
-    ASSERT(depth<=1024,"NYI using mutliple memories");
     Values rbGenargs({{"width",Const::make(c,width)},{"total_depth",Const::make(c,1024)}});
     nlohmann::json jdata;
     def->addInstance("cgramem","cgralib.Mem",
@@ -27,6 +26,42 @@ void load_mem_ext(Context* c) {
     def->connect("c1.out","cgramem.ren");
 
   });
+
+  Generator* ubmem = c->getGenerator("commonlib.unified_buffer");
+  ubmem->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {
+    uint width = args.at("width")->get<int>();
+    uint depth = args.at("depth")->get<int>();
+    bool rate_matched = args.at("rate_matched")->get<bool>();
+    uint stencil_width = args.at("stencil_width")->get<int>();
+    uint iter_cnt = args.at("iter_cnt")->get<int>();
+    uint dimensionality = args.at("dimensionality")->get<int>();
+    uint stride_0 = args.at("stride_0")->get<int>();
+    uint range_0 = args.at("range_0")->get<int>();
+    bool chain_en = args.at("chain_en")->get<bool>();
+    uint chain_idx = args.at("chain_idx")->get<int>();
+    uint starting_addr = args.at("starting_addr")->get<int>();
+    ASSERT(width==16,"NYI Non 16 bit width");
+    Values rbGenargs({{"width",Const::make(c,width)},{"total_depth",Const::make(c,1024)}});
+    nlohmann::json jdata;
+    def->addInstance("cgramem","cgralib.Mem",
+      rbGenargs,
+      {{"mode",Const::make(c,"unified_buffer")},{"depth",Const::make(c,depth)}, {"init", CoreIR::Const::make(c, jdata)},
+       {"rate_matched", Const::make(c, rate_matched)}, {"stencil_width", Const::make(c, stencil_width)},
+       {"iter_cnt", Const::make(c, iter_cnt)}, {"dimensionality", Const::make(c, dimensionality)},
+       {"stride_0", Const::make(c, stride_0)}, {"range_0", Const::make(c, range_0)},
+       {"chain_en", Const::make(c, chain_en)}, {"chain_idx", Const::make(c, chain_idx)},
+       {"starting_addr", Const::make(c, starting_addr)}});
+    def->addInstance("c1","corebit.const",{{"value",Const::make(c,true)}});
+    def->addInstance("c0","corebit.const",{{"value",Const::make(c,false)}});
+    def->connect("self.datain","cgramem.wdata");
+    def->connect("self.wen","cgramem.wen");
+    def->connect("self.dataout","cgramem.rdata");
+    def->connect("self.valid","cgramem.valid");
+    def->connect("c0.out","cgramem.cg_en");
+    def->connect("c1.out","cgramem.ren");
+
+  });
+
 
   Generator* rom = c->getGenerator("memory.rom2");
   rom->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {

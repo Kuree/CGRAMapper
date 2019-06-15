@@ -45,7 +45,7 @@ void load_mem_ext(Context* c) {
     def->addInstance("cgramem","cgralib.Mem",
       rbGenargs,
       {{"mode",Const::make(c,"unified_buffer")},{"depth",Const::make(c,depth)},
-       {"init", def->getModule()->getArg("init")},
+       {"init", CoreIR::Const::make(c, args.at("init")->get<Json>())},
        {"rate_matched", Const::make(c, rate_matched)}, {"stencil_width", Const::make(c, stencil_width)},
        {"iter_cnt", Const::make(c, iter_cnt)}, {"dimensionality", Const::make(c, dimensionality)},
        {"stride_0", Const::make(c, stride_0)}, {"range_0", Const::make(c, range_0)},

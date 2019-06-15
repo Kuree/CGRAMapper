@@ -42,10 +42,10 @@ void load_mem_ext(Context* c) {
     uint starting_addr = args.at("starting_addr")->get<int>();
     ASSERT(width==16,"NYI Non 16 bit width");
     Values rbGenargs({{"width",Const::make(c,width)},{"total_depth",Const::make(c,1024)}});
-    nlohmann::json jdata;
     def->addInstance("cgramem","cgralib.Mem",
       rbGenargs,
-      {{"mode",Const::make(c,"unified_buffer")},{"depth",Const::make(c,depth)}, {"init", CoreIR::Const::make(c, jdata)},
+      {{"mode",Const::make(c,"unified_buffer")},{"depth",Const::make(c,depth)},
+       {"init", def->getModule()->getArg("init")},
        {"rate_matched", Const::make(c, rate_matched)}, {"stencil_width", Const::make(c, stencil_width)},
        {"iter_cnt", Const::make(c, iter_cnt)}, {"dimensionality", Const::make(c, dimensionality)},
        {"stride_0", Const::make(c, stride_0)}, {"range_0", Const::make(c, range_0)},

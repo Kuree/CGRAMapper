@@ -57,14 +57,13 @@ void load_mem_ext(Context* c) {
        {"stride_2", Const::make(c, stride_2)}, {"range_2", Const::make(c, range_2)},
        {"chain_en", Const::make(c, chain_en)}, {"chain_idx", Const::make(c, chain_idx)},
        {"starting_addr", Const::make(c, starting_addr)}});
-    def->addInstance("c1","corebit.const",{{"value",Const::make(c,true)}});
     def->addInstance("c0","corebit.const",{{"value",Const::make(c,false)}});
     def->connect("self.datain","cgramem.wdata");
     def->connect("self.wen","cgramem.wen");
     def->connect("self.dataout","cgramem.rdata");
     def->connect("self.valid","cgramem.valid");
     def->connect("c0.out","cgramem.cg_en");
-    def->connect("c1.out","cgramem.ren");
+    def->connect("self.ren","cgramem.ren");
 
   });
 

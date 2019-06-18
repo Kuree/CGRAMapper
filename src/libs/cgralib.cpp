@@ -148,6 +148,10 @@ Namespace* CoreIRLoadLibrary_cgralib(Context* c) {
     d["stride_2"] = Const::make(c, 0);
     p["range_2"] = c->Int();
     d["range_2"] = Const::make(c, 0);
+    p["stride_3"] = c->Int();
+    d["stride_3"] = Const::make(c, 0);
+    p["range_3"] = c->Int();
+    d["range_3"] = Const::make(c, 0);
     p["chain_en"] = c->Bool();
     d["chain_en"] = Const::make(c, false);
     p["chain_idx"] = c->Int();

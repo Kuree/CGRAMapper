@@ -57,7 +57,7 @@ void load_mem_ext(Context* c) {
        {"stride_0", Const::make(c, stride_0)}, {"range_0", Const::make(c, range_0)},
        {"stride_1", Const::make(c, stride_1)}, {"range_1", Const::make(c, range_1)},
        {"stride_2", Const::make(c, stride_2)}, {"range_2", Const::make(c, range_2)},
-       {"stride_3", Const::make(c, stride_2)}, {"range_3", Const::make(c, range_2)},
+       {"stride_3", Const::make(c, stride_3)}, {"range_3", Const::make(c, range_3)},
        {"chain_en", Const::make(c, chain_en)}, {"chain_idx", Const::make(c, chain_idx)},
        {"starting_addr", Const::make(c, starting_addr)}});
     def->addInstance("c0","corebit.const",{{"value",Const::make(c,false)}});

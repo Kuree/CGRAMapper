@@ -43,6 +43,10 @@ void load_mem_ext(Context* c) {
     uint range_2 = args.at("range_2")->get<int>();
     uint stride_3 = args.at("stride_3")->get<int>();
     uint range_3 = args.at("range_3")->get<int>();
+    uint stride_4 = args.at("stride_4")->get<int>();
+    uint range_4 = args.at("range_4")->get<int>();
+    uint stride_5 = args.at("stride_5")->get<int>();
+    uint range_5 = args.at("range_5")->get<int>();
     bool chain_en = args.at("chain_en")->get<bool>();
     uint chain_idx = args.at("chain_idx")->get<int>();
     uint starting_addr = args.at("starting_addr")->get<int>();
@@ -58,6 +62,8 @@ void load_mem_ext(Context* c) {
        {"stride_1", Const::make(c, stride_1)}, {"range_1", Const::make(c, range_1)},
        {"stride_2", Const::make(c, stride_2)}, {"range_2", Const::make(c, range_2)},
        {"stride_3", Const::make(c, stride_3)}, {"range_3", Const::make(c, range_3)},
+       {"stride_4", Const::make(c, stride_4)}, {"range_4", Const::make(c, range_4)},
+       {"stride_5", Const::make(c, stride_5)}, {"range_5", Const::make(c, range_5)},
        {"chain_en", Const::make(c, chain_en)}, {"chain_idx", Const::make(c, chain_idx)},
        {"starting_addr", Const::make(c, starting_addr)}});
     def->addInstance("c0","corebit.const",{{"value",Const::make(c,false)}});

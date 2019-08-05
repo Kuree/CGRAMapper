@@ -133,8 +133,6 @@ int main(int argc, char *argv[]){
   }
   c->getGenerator("commonlib.lutN")->addDefaultGenArgs({{"N",Const::make(c,3)}});
 
-  c->getPassManager()->setVerbosity(true);
-
   LoadDefinition_cgralib(c); //Load the definitions first
   c->runPasses({"rungenerators","verifyconnectivity --onlyinputs --noclkrst","removebulkconnections"});
 

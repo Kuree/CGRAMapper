@@ -49,7 +49,7 @@ void load_mem_ext(Context* c) {
     uint range_5 = args.at("range_5")->get<int>();
     bool chain_en = args.at("chain_en")->get<bool>();
     uint chain_idx = args.at("chain_idx")->get<int>();
-    uint starting_addr = args.at("starting_addr")->get<int>();
+    uint starting_addr = (args.at("output_starting_addrs")->get<Json>())["output_start"][0];
     ASSERT(width==16,"NYI Non 16 bit width");
     Values rbGenargs({{"width",Const::make(c,width)},{"total_depth",Const::make(c,1024)}});
     def->addInstance("cgramem","cgralib.Mem",
@@ -67,9 +67,9 @@ void load_mem_ext(Context* c) {
        {"chain_en", Const::make(c, chain_en)}, {"chain_idx", Const::make(c, chain_idx)},
        {"starting_addr", Const::make(c, starting_addr)}});
     def->addInstance("c0","corebit.const",{{"value",Const::make(c,false)}});
-    def->connect("self.datain","cgramem.wdata");
+    def->connect("self.datain0","cgramem.wdata");
     def->connect("self.wen","cgramem.wen");
-    def->connect("self.dataout","cgramem.rdata");
+    def->connect("self.dataout0","cgramem.rdata");
     def->connect("self.valid","cgramem.valid");
     def->connect("c0.out","cgramem.cg_en");
     def->connect("self.ren","cgramem.ren");

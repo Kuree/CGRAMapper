@@ -134,7 +134,7 @@ int main(int argc, char *argv[]){
   c->getGenerator("commonlib.lutN")->addDefaultGenArgs({{"N",Const::make(c,3)}});
 
   LoadDefinition_cgralib(c); //Load the definitions first
-  c->runPasses({"rungenerators","verifyconnectivity --onlyinputs --noclkrst","removebulkconnections"});
+  c->runPasses({"rungenerators","verifyconnectivity --onlyinputs --noclkrst","removebulkconnections","removesinglemuxes"});
 
 
   //load last verification
@@ -142,8 +142,6 @@ int main(int argc, char *argv[]){
   c->runPasses({"verifycanmap"});
 
   //DO any normal optimizations
-
-
   c->runPasses({"deletedeadinstances"});
   c->runPasses({"removewires"});
   addIOs(c,top);

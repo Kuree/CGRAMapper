@@ -170,6 +170,19 @@ Namespace* CoreIRLoadLibrary_cgralib(Context* c) {
     p["starting_addr"] = c->Int();
     d["starting_addr"] = Const::make(c, 0);
 
+    p["valid_sched_0"] = c->Int();
+    d["valid_sched_0"] = Const::make(c, 0);
+    p["valid_sched_1"] = c->Int();
+    d["valid_sched_1"] = Const::make(c, 0);
+    p["valid_sched_2"] = c->Int();
+    d["valid_sched_2"] = Const::make(c, 0);
+    p["valid_sched_3"] = c->Int();
+    d["valid_sched_3"] = Const::make(c, 0);
+    p["valid_sched_4"] = c->Int();
+    d["valid_sched_4"] = Const::make(c, 0);
+    p["valid_sched_5"] = c->Int();
+    d["valid_sched_5"] = Const::make(c, 0);
+
     return {p,d};
   };
 

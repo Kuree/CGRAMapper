@@ -47,6 +47,12 @@ void load_mem_ext(Context* c) {
     uint range_4 = args.at("range_4")->get<int>();
     uint stride_5 = args.at("stride_5")->get<int>();
     uint range_5 = args.at("range_5")->get<int>();
+    uint valid_sched_0 = args.at("valid_sched_0")->get<int>();
+    uint valid_sched_1 = args.at("valid_sched_1")->get<int>();
+    uint valid_sched_2 = args.at("valid_sched_2")->get<int>();
+    uint valid_sched_3 = args.at("valid_sched_3")->get<int>();
+    uint valid_sched_4 = args.at("valid_sched_4")->get<int>();
+    uint valid_sched_5 = args.at("valid_sched_5")->get<int>();
     bool chain_en = args.at("chain_en")->get<bool>();
     uint chain_idx = args.at("chain_idx")->get<int>();
     uint starting_addr = (args.at("output_starting_addrs")->get<Json>())["output_start"][0];
@@ -64,6 +70,9 @@ void load_mem_ext(Context* c) {
        {"stride_3", Const::make(c, stride_3)}, {"range_3", Const::make(c, range_3)},
        {"stride_4", Const::make(c, stride_4)}, {"range_4", Const::make(c, range_4)},
        {"stride_5", Const::make(c, stride_5)}, {"range_5", Const::make(c, range_5)},
+       {"valid_sched_0", Const::make(c, valid_sched_0)}, {"valid_sched_1", Const::make(c, valid_sched_1)},
+       {"valid_sched_2", Const::make(c, valid_sched_2)}, {"valid_sched_3", Const::make(c, valid_sched_3)},
+       {"valid_sched_4", Const::make(c, valid_sched_4)}, {"valid_sched_5", Const::make(c, valid_sched_5)},
        {"chain_en", Const::make(c, chain_en)}, {"chain_idx", Const::make(c, chain_idx)},
        {"starting_addr", Const::make(c, starting_addr)}});
     def->addInstance("c0","corebit.const",{{"value",Const::make(c,false)}});

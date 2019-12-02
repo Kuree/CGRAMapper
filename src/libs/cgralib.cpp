@@ -127,6 +127,9 @@ Namespace* CoreIRLoadLibrary_cgralib(Context* c) {
     d["chain_enable"] = Const::make(c,false);
 
     p["init"] = JsonType::make(c);
+    Json jdata;
+    jdata["init"][0] = 0;
+    d["init"] = Const::make(c,jdata);
 
     p["rate_matched"] = c->Bool();
     d["rate_matched"] = Const::make(c, false);

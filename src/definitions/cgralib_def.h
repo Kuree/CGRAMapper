@@ -76,6 +76,22 @@ void load_mem_ext(Context* c) {
 
   });
 
+  Generator* ram = c->getGenerator("memory.ram2");
+  ram->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {
+    uint width = args.at("width")->get<int>();
+    Values rbGenargs({{"width",Const::make(c,width)},{"total_depth",Const::make(c,1024)}});
+    def->addInstance("cgramem","cgralib.Mem",
+      rbGenargs,
+      {{"mode",Const::make(c,"sram")}});
+    def->addInstance("c1","corebit.const",{{"value",Const::make(c,true)}});
+    def->addInstance("c0","corebit.const",{{"value",Const::make(c,false)}});
+    def->connect("self.rdata","cgramem.rdata");
+    def->connect("self.ren","cgramem.ren");
+    def->connect("self.raddr","cgramem.addr");
+    def->connect("self.wdata","cgramem.wdata");
+    def->connect("self.wen","cgramem.wen");
+  });
+
 
   Generator* rom = c->getGenerator("memory.rom2");
   rom->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {

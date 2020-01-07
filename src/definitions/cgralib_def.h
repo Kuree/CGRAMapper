@@ -27,7 +27,7 @@ void load_mem_ext(Context* c) {
 
   });
 
-  Generator* ubmem = c->getGenerator("commonlib.unified_buffer");
+  Generator* ubmem = c->getGenerator("lakelib.unified_buffer");
   ubmem->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {
     uint width = args.at("width")->get<int>();
     uint depth = args.at("depth")->get<int>();
@@ -91,7 +91,6 @@ void load_mem_ext(Context* c) {
     def->connect("self.wdata","cgramem.wdata");
     def->connect("self.wen","cgramem.wen");
   });
-
 
   Generator* rom = c->getGenerator("memory.rom2");
   rom->setGeneratorDefFromFun([](Context* c, Values args, ModuleDef* def) {

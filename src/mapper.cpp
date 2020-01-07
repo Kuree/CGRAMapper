@@ -4,7 +4,7 @@
 #include "coreir/libs/commonlib.h"
 #include "coreir/libs/float.h"
 #include "coreir/passes/analysis/coreirjson.h"
-
+#include "lakelib.h"
 
 #include <fstream>
 
@@ -104,6 +104,7 @@ int main(int argc, char *argv[]){
   CoreIRLoadLibrary_cgralib(c);
   CoreIRLoadLibrary_commonlib(c);
   CoreIRLoadLibrary_float(c);
+  CoreIRLoadLibrary_lakelib(c);
 
   string premap;
   string postmap;

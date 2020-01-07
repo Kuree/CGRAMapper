@@ -1,18 +1,19 @@
 HOME = ..
 COREIR = $(HOME)/../coreir
-LPATH = -L$(HOME)/lib
-INCS = -I$(HOME)/include -I. -I$(COREIR)/include
+LAKELIB = $(HOME)/../BufferMapping
+LPATH = -L$(HOME)/lib -L$(LAKELIB)/cfunc/bin
+INCS = -I$(HOME)/include -I. -I$(COREIR)/include -I$(LAKELIB)/cfunc/include
 
 SRC=$(wildcard [^_]*.cpp)
 OBJ=$(patsubst %.cpp, build/%.o, $(SRC))
 
-LIBS= -lcoreir-commonlib -lcoreir -lcoreir-cgralib -lcoreirsim -lcoreir-float
+LIBS= -lcoreir-commonlib -lcoreir -lcoreir-cgralib -lcoreirsim -lcoreir-float -lcoreir-lakelib
 
 all: build/mapper
 
 build/mapper: build/mapper.o
 	$(MAKE) -C libs $(TARGET)
-	$(CXX) $(LDFLAGS) -o $@ $^ $(LPATH) $(LIBS)
+	$(CXX) $(LDFLAGS) -o $@ $^ $(LPATH) $(LIBS) -static-libgcc -static-libstdc++
 	cp build/mapper ../bin/cgra-mapper
 
 build/%.o: %.cpp 
